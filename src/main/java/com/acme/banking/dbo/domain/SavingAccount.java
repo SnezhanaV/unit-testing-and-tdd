@@ -6,9 +6,14 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
+        if (client == null) throw new ExceptionInInitializerError("Client is empty");
+        if (id <= 0) throw new IllegalArgumentException("Id is negative or 0");
+        if (amount < 0) throw new IllegalArgumentException("Amount is negative");
+
         this.id = id;
         this.client = client;
         this.amount = amount;
+        client.addAccount(this);
     }
 
     @Override
