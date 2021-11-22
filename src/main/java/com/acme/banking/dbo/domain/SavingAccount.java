@@ -1,4 +1,5 @@
 package com.acme.banking.dbo.domain;
+import java.lang.Math;
 
 public class SavingAccount implements Account {
     private int id;
@@ -7,8 +8,7 @@ public class SavingAccount implements Account {
 
     public SavingAccount(int id, Client client, double amount) {
         if (client == null) throw new IllegalArgumentException("Client is null");
-
-//        if (id <= 0) throw new IllegalArgumentException("Id is negative or 0");
+        if ((Math.signum(id)==-1) || (Math.signum(id)==0)) throw new IllegalArgumentException("Id is negative or 0");
 //        if (amount < 0) throw new IllegalArgumentException("Amount is negative");
 
         this.id = id;

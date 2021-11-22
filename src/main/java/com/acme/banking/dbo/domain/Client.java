@@ -10,7 +10,7 @@ public class Client {
 
     public Client(int id, String name) {
         if ((name == "") || (name == null)) throw new IllegalArgumentException("Client name is empty");
-        if (id <= 0) throw new IllegalArgumentException("Id is negative or 0");
+        if ((Math.signum(id)==-1) || (Math.signum(id)==0)) throw new IllegalArgumentException("Id is negative or 0");
 
 
         this.id = id;

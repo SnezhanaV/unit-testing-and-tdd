@@ -65,4 +65,20 @@ public class SavingAccountTest {
         assertTrue(thrown.getMessage().contains("Client is null"));
     }
 
+    @Test
+    public void shouldNotSaveAccountWhenIdIsNegative() {
+        //Given
+        final int accountId = -1;
+        Client client = new Client(1, "dummy client name");
+
+        //When
+        Exception thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new SavingAccount(accountId, client, 100)
+        );
+
+        //Then
+        assertTrue(thrown.getMessage().contains("Id is negative or 0"));
+    }
+
 }
