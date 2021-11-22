@@ -30,6 +30,8 @@ public class Client {
     }
 
     public void addAccount(Account account) {
+        if (account == null) throw new IllegalArgumentException("Account is empty");
+
         accounts.add(account);
     }
 }

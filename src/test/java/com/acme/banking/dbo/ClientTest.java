@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -98,5 +99,20 @@ public class ClientTest {
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
+    }
+
+    @Test
+    public void shouldNotAddAccountWhenAccountIsNull() {
+        //Given
+        Client sut = new Client(1, "dummy client name");
+
+        //When
+        Exception thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> sut.addAccount(null)
+        );
+
+        //Then
+        assertTrue(thrown.getMessage().contains("Account is empty"));
     }
 }

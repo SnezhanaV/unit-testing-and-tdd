@@ -23,53 +23,46 @@ public class SavingAccountTest {
         final int clientId = 1;
         final String clientName = "client name";
         final double amount = 100;
+        final int accountId = 1;
 
-        Client client = new Client(clientId, clientName);
+        Client sut = new Client(clientId, clientName);
 
         //When
-        SavingAccount account = new SavingAccount(1, client, amount);
+        SavingAccount account = new SavingAccount(accountId, sut, amount);
 
         //Then
-        assertThat(client.getAccounts())
+        assertThat(sut.getAccounts())
                 .containsOnly(account);
     }
 
-
-
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-        final double clientAmount = 100;
-        Client client = new Client(clientId, clientName);
-        //endregion
+        //Given
+        final int accountId = 1;
+        final double amount = 100;
+        Client client = new Client(1, "dummy client name");
 
-        //region when
-        SavingAccount sut = new SavingAccount(clientId, client, clientAmount);
+        //When
+        SavingAccount sut = new SavingAccount(accountId, client, amount);
         assumeTrue(sut != null);
-        //endregion
 
-        //region then
-        //Junit5:
-        assertAll("SavingAccount store its properties",
-                () -> assertEquals(clientId, sut.getId()),
-                () -> assertEquals(clientAmount, sut.getAmount()),
-                () -> assertEquals(client, sut.getClient())
+        //Then
+        assertThat(sut)
+                .hasFieldOrPropertyWithValue("id", accountId)
+                .hasFieldOrPropertyWithValue("client", client)
+                .hasFieldOrPropertyWithValue("amount", amount);
+    }
+
+    @Test
+    public void shouldNotSaveAccountWhenClientIsNull() {
+        //When
+        Exception thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new SavingAccount(1, null, 100)
         );
 
-        //Hamcrest:
-//        assertThat(sut,
-//                allOf(
-//                        hasProperty("id", notNullValue()),
-//                        hasProperty("id", equalTo(clientId)),
-//                        hasProperty("name", is(clientName))
-//                ));
-
-        //AssertJ:
-        assertThat(sut)
-                .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
-        //endregion
+        //Then
+        assertTrue(thrown.getMessage().contains("Client is null"));
     }
+
 }
