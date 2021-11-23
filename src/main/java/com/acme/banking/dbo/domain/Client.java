@@ -17,6 +17,11 @@ public class Client {
         this.name = name;
     }
 
+    public Client(String name) {
+        if ((name == "") || (name == null)) throw new IllegalArgumentException("Client name is empty");
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

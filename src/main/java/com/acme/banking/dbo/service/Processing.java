@@ -7,16 +7,35 @@ import com.acme.banking.dbo.domain.Client;
 import java.util.Collection;
 
 public class Processing {
-    public Client createClient(String name) {
-        return null; //TODO
+    private AccountRepository accounts;
+
+    /**
+     * DI
+     */
+    public Processing(AccountRepository accounts) {
+        this.accounts = accounts;
+    }
+
+    public void createClient(String name) {
+        if ((name == "") || (name == null)) throw new IllegalArgumentException("Client name is empty");
+        accounts.save(new Client(name));
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
-        return null; //TODO
+        //....
+        return accounts.getAccountsByClientId(clientId);
+        //....
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
-        //TODO
+        Account from = accounts.getAccountById(fromAccountId);
+        Account to = accounts.getAccountById(toAccountId);
+
+        from.setAmount( from.getAmount() - amount );
+        to.setAmount( to.getAmount() + amount );
+
+        accounts.save(from);
+        accounts.save(to);
     }
 
     public void cash(double amount, int fromAccountId) {
