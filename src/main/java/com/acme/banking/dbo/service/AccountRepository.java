@@ -8,8 +8,8 @@ import java.util.Collection;
 public interface AccountRepository {
     Collection<Account> getAccountsByClientId(int clientId);
 
-    void save(Account account);
-    void save(Client client);
+    Account save(Account account);
+    Account save(Client client);
 
     Account getAccountById(int fromAccountId);
 

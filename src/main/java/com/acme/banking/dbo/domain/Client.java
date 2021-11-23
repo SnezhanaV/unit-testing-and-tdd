@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class Client {
     private int id;
@@ -38,5 +39,18 @@ public class Client {
         if (account == null) throw new IllegalArgumentException("Account is empty");
 
         accounts.add(account);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && name.equals(client.name) && accounts.equals(client.accounts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, accounts);
     }
 }

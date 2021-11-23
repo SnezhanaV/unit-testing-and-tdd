@@ -1,10 +1,10 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -33,11 +33,11 @@ public class ClientTest {
         assertTrue(thrown.getMessage().contains("Id is negative"));
     }
 
-    @Test
-    public void shouldCreateThrowWhenNameIsNull() {
+    @ParameterizedTest
+    @ValueSource(strings = {""})
+    public void shouldCreateThrowWhenNameIsNull(String clientName) {
         //Given
         final int dummyId = 1;
-        final String clientName = null;
 
         //When
         Exception thrown = assertThrows(

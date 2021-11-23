@@ -16,9 +16,9 @@ public class Processing {
         this.accounts = accounts;
     }
 
-    public void createClient(String name) {
+    public Account createClient(String name) {
         if ((name == "") || (name == null)) throw new IllegalArgumentException("Client name is empty");
-        accounts.save(new Client(name));
+        return accounts.save(new Client(name));
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
